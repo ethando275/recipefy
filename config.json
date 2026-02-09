@@ -1,0 +1,12 @@
+{
+  "model_type": "food_recognition",
+  "architecture": "efficientnet_yolo",
+  "num_classes": 101,
+  "image_size": [224, 224],
+  "confidence_threshold": 0.5,
+  "max_detections": 10,
+  "nutritional_database": true,
+  "version": "1.0.0",
+  "framework": "tensorflow",
+  "task": "image-classification"
+}
