@@ -1,10 +1,10 @@
-import os, io
+import os, io, ssl
 from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
 from PIL import Image
 from pydantic import BaseModel, Field
 from google import genai
 from dotenv import load_dotenv
-from flask_cors import CORS
 
 load_dotenv()
 
@@ -69,4 +69,12 @@ def analyze_frame():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=4444)
+    # Create SSL context for HTTPS
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain('cert.pem', 'key.pem')
+    
+    print("🚀 Recipefy AR Server starting with HTTPS...")
+    print("📱 Access from Meta Quest: https://YOUR_IP:4444")
+    print("🔒 Note: You'll need to accept the SSL certificate warning")
+    
+    app.run(host="0.0.0.0", port=4444, ssl_context=context)

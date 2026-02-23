@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipefy AR - Meta Quest</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        #ar-scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        #ui-overlay { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            background: rgba(0,0,0,0.8); 
+            color: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .status { color: #00ff00; margin-bottom: 10px; }
+        .ingredients { margin: 10px 0; }
+        .recipes { margin: 10px 0; }
+        .recipe-item { margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; }
+        .recipe-title { font-weight: bold; color: #ffcc00; }
+        .recipe-desc { font-size: 14px; color: #ccc; }
+        #startButton { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            padding: 20px 40px; 
+            font-size: 18px; 
+            background: #1e88e5; 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .loading { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            color: white; 
+            font-size: 20px; 
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <button id="startButton">Start AR Experience</button>
+    <div class="loading" id="loading" style="display: none;">Loading AR...</div>
+    
+    <a-scene id="ar-scene" 
+            vr-mode-ui="enabled: false" 
+            arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+            style="display: none;">
+        
+        <a-camera gps-camera rotation-reader></a-camera>
+        
+        <!-- AR Content Container -->
+        <a-entity id="ar-content"></a-entity>
+        
+    </a-scene>
+
+    <div id="ui-overlay" style="display: none;">
+        <div class="status" id="status">INITIALIZING...</div>
+        
+        <div class="ingredients">
+            <h3>🥗 Ingredients Detected:</h3>
+            <div id="ingredients-list">Waiting for detection...</div>
+        </div>
+        
+        <div class="recipes">
+            <h3>🍳 Recipe Suggestions:</h3>
+            <div id="recipes-list">No recipes yet...</div>
+        </div>
+    </div>
+
+    <script type="module" src="quest-ar.js"></script>
+</body>
+</html>
