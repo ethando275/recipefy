@@ -13,7 +13,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 MODEL_ID = "gemini-2.0-flash" 
 
 app = Flask(__name__, static_folder='web')
-CORS(app)  # Enable CORS for web frontend
+CORS(app)  # Enable CORS for web frontend and Unity
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Serve web frontend
@@ -27,7 +27,7 @@ def serve_static(filename):
 
 # --- Schema for Structured Output ---
 class Ingredient(BaseModel):
-    label: str = Field(description="Singular lowercase name of the food")
+    label: str = Field(description="Singular lowercase name of food")
     box_2d: list[int] = Field(description="Normalized [ymin, xmin, ymax, xmax] (0-1000)")
 
 class Recipe(BaseModel):
@@ -69,4 +69,4 @@ def analyze_frame():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=4444)
+    app.run(host="0.0.0.0", port=5000)
